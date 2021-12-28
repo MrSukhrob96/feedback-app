@@ -2,29 +2,25 @@
 
 namespace App\Feedback\Repositories;
 
-use App\Feedback\Repositories\Interfaces\FeedbackRepositoryInterface;
+use App\Feedback\Managers\Interfaces\FeedbackFactoryInterface;
 
-
-class TxtRepository implements FeedbackRepositoryInterface
+class TxtRepository implements FeedbackFactoryInterface
 {
 
-    private $file;
+    public const LOG_FILE = "test.txt";
 
-    public function __construct($file)
+    public function add($request)
     {
-        $this->file = $file;
+        file_put_contents(self::LOG_FILE, $this->getText($request) . PHP_EOL, FILE_APPEND);
     }
 
-    public function addFeedback($request)
+    private function getText($request)
     {
-        $txt = "name={$request->name}@@@phone={$request->phone}@@@message={$request->message}";
-
-        file_put_contents($this->file, $txt . PHP_EOL, FILE_APPEND);
+        return "name={$request->name}@@@phone={$request->phone}@@@message={$request->message}";
     }
 
     public function getFeedback()
     {
         //...
     }
-
 }

@@ -2,34 +2,20 @@
 
 namespace App\Feedback\Managers;
 
-use App\Feedback\Repositories\Interfaces\FeedbackRepositoryInterface;
+use App\Feedback\Managers\Interfaces\FeedbackFactoryInterface;
 use App\Feedback\Repositories\TxtRepository;
-use App\Feedback\Repositories\DbRepository;
 
 class  FeedbackFactory
 {
-
     public $feedbackRepository;
 
-    public const FILE = "test.txt";
-
-    public function __construct(
-        FeedbackRepositoryInterface $feedbackRepository
-    ) {
+    public function __construct(FeedbackFactoryInterface $feedbackRepository)
+    {
         $this->feedbackRepository = $feedbackRepository;
     }
 
-    public static function addFeedback($request, $type)
+    public function add($request)
     {
-        switch ($type) {
-            case "txt": {
-                    (new TxtRepository(self::FILE))->addFeedback($request);
-                }
-            case "db": {
-                    (new DbRepository())->addFeedback($request);
-                }
-            default: {
-                }
-        }
+        $this->feedbackRepository->add($request);
     }
 }

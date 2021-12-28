@@ -2,6 +2,9 @@
 
 namespace App\Feedback\Managers\Interfaces;
 
-class  FeedbackFactoryInterface {
-    
+use Illuminate\Http\Request;
+
+interface  FeedbackFactoryInterface
+{
+    public function add(Request $request);
 }

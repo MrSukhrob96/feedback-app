@@ -2,11 +2,10 @@
 
 namespace App\Feedback\Repositories;
 
-use App\Feedback\Repositories\Interfaces\FeedbackRepositoryInterface;
 use App\Models\Feedback;
+use App\Feedback\Managers\Interfaces\FeedbackFactoryInterface;
 
-
-class DbRepository implements FeedbackRepositoryInterface
+class DbRepository implements FeedbackFactoryInterface
 {
 
     public $feedbackModel;
@@ -16,7 +15,7 @@ class DbRepository implements FeedbackRepositoryInterface
         $this->feedbackModel = new Feedback();
     }
 
-    public function addFeedback($request)
+    public function add($request)
     {
         $this->feedbackModel->create(array(
             "name" => $request->name,
